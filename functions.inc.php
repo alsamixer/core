@@ -2239,7 +2239,6 @@ function core_do_get_config($engine) {
 					$trunk_macro = 'dialout-trunk';
 					break;
 				}
-				//$ext->add($context, $exten, '', new ext_macro($trunk_macro, $trunk_id . ',' . $pattern['prepend_digits'] . '${EXTEN' . $offset . '},' . $password . ',' . $trunk_table[$trunk_id]['continue']));
 				$ext->add($context, $exten, '', new ext_gosub('1','s','sub-'.$trunk_macro, $trunk_id.','.$pattern['prepend_digits'].'${EXTEN'.$offset.'},'.$password.','.$trunk_table[$trunk_id]['continue']));
 				$password = '';
 				$trunk_type_needed['sub-' . $trunk_macro] = true;
