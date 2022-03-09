@@ -4820,11 +4820,11 @@ function core_do_get_config($engine) {
 	$mcontext = 'sub-blkvm-setifempty';
 	$ext->add($mcontext,$exten,'', new ext_gotoif('$[!${EXISTS(${BLKVM_CHANNEL})}]', 'init'));
 	$ext->add($mcontext,$exten,'', new ext_set('GOSUB_RETVAL','${SHARED(BLKVM,${BLKVM_CHANNEL})}'));
-	$ext->add($mcontext,$exten,'', new ext_macroexit(''));
+	$ext->add($mcontext,$exten,'', new ext_return(''));
 	$ext->add($mcontext,$exten,'init', new ext_set('__BLKVM_CHANNEL','${CHANNEL}'));
 	$ext->add($mcontext,$exten,'', new ext_set('SHARED(BLKVM,${BLKVM_CHANNEL})','TRUE'));
 	$ext->add($mcontext,$exten,'', new ext_set('GOSUB_RETVAL','TRUE'));
-	$ext->add($mcontext,$exten,'', new ext_macroexit(''));
+	$ext->add($mcontext,$exten,'', new ext_return(''));
 
 	// If BLKVM_CHANNEL not set or 'reset' is passed, then initialize it to this channel then set and retrun TRUE
 	//
@@ -4839,7 +4839,7 @@ function core_do_get_config($engine) {
 	$ext->add($mcontext,$exten,'', new ext_execif('$[!${EXISTS(${BLKVM_CHANNEL})} | "{ARG1}" = "reset"]', 'Set','__BLKVM_CHANNEL=${CHANNEL}'));
 	$ext->add($mcontext,$exten,'', new ext_set('SHARED(BLKVM,${BLKVM_CHANNEL})','TRUE'));
 	$ext->add($mcontext,$exten,'', new ext_set('GOSUB_RETVAL','TRUE'));
-	$ext->add($mcontext,$exten,'', new ext_macroexit(''));
+	$ext->add($mcontext,$exten,'', new ext_return(''));
 
 	// if clearing, BLKVM_CHANNEL should already exist (if not, we clear our channel's copy)
 	//
@@ -4852,7 +4852,7 @@ function core_do_get_config($engine) {
 	$mcontext = 'sub-blkvm-clr';
 	$ext->add($mcontext,$exten,'', new ext_set('SHARED(BLKVM,${BLKVM_CHANNEL})',''));
 	$ext->add($mcontext,$exten,'', new ext_set('GOSUB_RETVAL',''));
-	$ext->add($mcontext,$exten,'', new ext_macroexit(''));
+	$ext->add($mcontext,$exten,'', new ext_return(''));
 
 	// if checking, BLKVM_CHANNEL should already exist (if not, we check our channel's copy)
 	// CC_RECALL was originally used for CallCompletion but is used elsewhere as well for recall automated
@@ -4867,7 +4867,7 @@ function core_do_get_config($engine) {
 	$mcontext = 'sub-blkvm-check';
 	$ext->add($mcontext,$exten,'', new ext_set('GOSUB_RETVAL','${SHARED(BLKVM,${BLKVM_CHANNEL})}'));
 	$ext->add($mcontext,$exten,'', new ext_execif('$["${GOSUB_RETVAL}"="" & "${CC_RECALL}"="1"]', 'Set','GOSUB_RETVAL=TRUE'));
-	$ext->add($mcontext,$exten,'', new ext_macroexit(''));
+	$ext->add($mcontext,$exten,'', new ext_return(''));
 
 	$mcontext = 'macro-hangupcall';
 	$exten = 's';
